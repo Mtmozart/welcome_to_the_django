@@ -171,7 +171,7 @@ Depois altera no url:
 <a href="{% url 'imagem' %}"></a>
 ```
 
-### DRY - Don't repeat yourself
+### DRY - Don't repeat yourself e Base
 
 Não repita o código, para isso o django permite que você crie uma blocos, para evitar repetição, segundo a sua aplicação feita da seguinte maneira:
 
@@ -196,3 +196,16 @@ Não repita o código, para isso o django permite que você crie uma blocos, par
 ```
 
 - ATENÇÃO: Deve-se ficar atento ao encerramento das tags.
+
+### Partials
+
+- Pedaços do código que são repetidos, imagino que seja como o dry, deve-se criar um artigo da seguinte maneira "\_nome_do_arquivo".
+
+por preferÊncia, o coloca no base:
+
+```html
+<body>
+  {% block content %} {% endblock %} {% include 'galeria/partials/_footer.html'
+  %}
+</body>
+```
