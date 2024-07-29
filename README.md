@@ -120,3 +120,53 @@ from django.shortcuts import render
 def index(request):
         return render(request, 'index.html')
 ```
+
+### Criando arquivos estáticos
+
+O procedimento é o mesmo, mas agora vamos no STATICFILES_DIR
+
+```Python
+//caminho de onde estarão os arquivos estáticos
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'setup/static')
+]
+//onde o python vai coletar
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+```
+
+depois usa-se os seguintes comandos estáticos: **python manage.py collectstatic**
+
+Em seguida, deve-se colocar no topo da página o seguinte comando: **{% load static %}**
+
+Por fim, onde tem o arquivo css, indica-se o static:
+
+```html
+<link rel="stylesheet" href="{% static '/styles/style.css' %}" />
+```
+
+IMPORTANTE: para todos os arquivos statics que temos, deve-se por o {% static %}, como no exemplo:
+
+```html
+<img
+  src="{% static '/assets/ícones/1x/favorite_outline.png' %}"
+  alt="ícone de coração"
+/>
+```
+
+### URL name
+
+Definindo nome da urls para alterar rotas de imagem, dá um nome à rota
+
+```python
+urlpatterns = [
+    path('', index, name='index'),
+    path('imagem/', imagem, name='imagem'),
+]
+```
+
+Depois altera no url:
+
+```html
+<a href="{% url 'imagem' %}"></a>
+```
