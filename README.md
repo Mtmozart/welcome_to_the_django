@@ -170,3 +170,29 @@ Depois altera no url:
 ```html
 <a href="{% url 'imagem' %}"></a>
 ```
+
+### DRY - Don't repeat yourself
+
+Não repita o código, para isso o django permite que você crie uma blocos, para evitar repetição, segundo a sua aplicação feita da seguinte maneira:
+
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    //código head
+  </head>
+
+  <body>
+    //necessário para deniir as partes {% block content %} {% endblock %}
+  </body>
+</html>
+```
+
+```html
+- depois, nas partes que for adicionar, só usar as seguintes tags {% extends
+'galeria/base.html' %} {% load static %} {% block content %} /*Conteúdo html*/
+{% endblock%}
+```
+
+- ATENÇÃO: Deve-se ficar atento ao encerramento das tags.
