@@ -341,7 +341,9 @@ Fotografia.objects.all()
 **Inserindo os dados no views.py**
 
 ```python
-fotografias = Fotografia.objects.all()
+def index(request):
+        fotografias = Fotografia.objects.all()
+        return render(request, 'galeria/index.html', {"cards": fotografias})
 ```
 
 ```html
