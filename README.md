@@ -1,4 +1,4 @@
-Anotaçãos sobre django:
+Anotações sobre django:
 
 # Visão Geral e Configuração do Django
 
@@ -29,16 +29,18 @@ Certifique-se de ter o Python instalado. O Django requer o Python 3.6 ou superio
    Abra o terminal e execute o seguinte comando para instalar o Django usando `pip`:
 
    ```bash
+
    pip install django
+
    ```
 
 ### Iniciciar uma aplicação django
 
-```bash python manage.py runserver
-
+```bash
+python manage.py runserver
 ```
 
-### Algumas anotações imporntates:
+### Algumas anotações importantes:
 
 **startapp x start projetc**
 
@@ -46,7 +48,8 @@ O projeto é o conjunto de todas as aplicações, já o app seria uma funcionali
 
 #### Como eu o crio ?
 
-```bash python manage.py startapp "nome"
+```bash
+python manage.py startapp "nome"
 
 ```
 
@@ -76,7 +79,8 @@ urlpatterns = [
 ]
 ```
 
-**\_Isolando urls e boa prática**
+**Isolando urls e boa prática**
+
 primeiramente, crias o arquivo urls.py no app, nele ficarão todas as rotas do app, assim como no original, em seguida, importa o método includes junto com o path o aplica a seguinte configuração do urls.py do setup:
 
 ```Python
