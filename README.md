@@ -337,3 +337,40 @@ foto = Fotografia(nome="Nebulosa de Carina", legenda="webbtelescope.org / NASA /
 foto.save()
 Fotografia.objects.all()
 ```
+
+**Inserindo os dados no views.py**
+
+```python
+fotografias = Fotografia.objects.all()
+```
+
+```html
+<ul class="cards__lista">
+  {% if cards %}
+  <!-- Key e value-->
+  {% for fotografia in cards %}
+  <li class="card">
+    <a href="{% url 'imagem' %}">
+      <img
+        class="card__imagem"
+        src="{% static '/assets/imagens/galeria/'%}{{fotografia.foto}}"
+        alt="foto"
+      />
+    </a>
+    <span class="card__tag">Estrelas</span>
+    <div class="card__info">
+      <p class="card__titulo">{{fotografia.nome}}</p>
+      <div class="card__texto">
+        <p class="card__descricao">{{fotografia.legenda}}</p>
+        <span>
+          <img
+            src="{% static '/assets/ícones/1x/favorite_outline.png' %}"
+            alt="ícone de coração"
+          />
+        </span>
+      </div>
+    </div>
+  </li>
+  {% endfor %} {% else %} {% endif %}
+</ul>
+```
