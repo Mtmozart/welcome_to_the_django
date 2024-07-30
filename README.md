@@ -1,5 +1,25 @@
 Anotações sobre django:
 
+# Primeiramente
+
+Criando um ambiente virtual:
+
+```bash
+python3 -m venv venv
+```
+
+Ativando um ambiente virtual
+
+```bash
+source venv/bin/activate
+```
+
+Desativando um ambiente virtual
+
+```bash
+deactivate
+```
+
 # Visão Geral e Configuração do Django
 
 ## O que é Django?
@@ -29,12 +49,18 @@ Certifique-se de ter o Python instalado. O Django requer o Python 3.6 ou superio
    Abra o terminal e execute o seguinte comando para instalar o Django usando `pip`:
 
    ```bash
-
    pip install django
-
    ```
 
-### Iniciciar uma aplicação django
+2. **Criar um projeto django**
+
+É uma boa prática chamar o projeto de setup ou config
+
+```bash
+django-admin startproject setup
+```
+
+**Iniciar uma aplicação/projeto em django**
 
 ```bash
 python manage.py runserver
@@ -50,7 +76,22 @@ O projeto é o conjunto de todas as aplicações, já o app seria uma funcionali
 
 ```bash
 python manage.py startapp "nome"
+```
 
+### Como eu faço que o Django reconheça o app ?
+
+Passando a referÊncia do settings.py, passando o caminho como boa prática:
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'galeria.apps.GaleriaConfig'
+]
 ```
 
 ### Trabalhando dentro de um app
@@ -212,4 +253,87 @@ por preferÊncia, o coloca no base:
   {% block content %} {% endblock %} {% include 'galeria/partials/_footer.html'
   %}
 </body>
+```
+
+## Enviando dados via render
+
+- Para enviar dados como um dicionário para a página principal, basta por, abrir chaves e os anotar
+
+```python
+dados = {
+        1: {"nome": "nebulosa de carina",
+            "legenda": "webbtelecope.org / NASA / James Webb"
+            },
+        2: {"nome": "Galáxia NGC 1079",
+            "legenda": "nasa.or / NASA / Hubble"
+            }
+}
+        return render(request, 'galeria/index.html', {"cards": dados})
+```
+
+- Para renderizar isso em um html, deve-se usar da seguinte maneira, se for laço for:
+
+```html
+<!-- Key e value-->
+{% for foto_id, info in cards.items %}
+<li class="card">
+  <a href="{% url 'imagem' %}">
+    <img
+      class="card__imagem"
+      src="{% static '/assets/imagens/galeria/carina-nebula.png' %}"
+      alt="foto"
+    />
+  </a>
+  <span class="card__tag">Estrelas</span>
+  <div class="card__info">
+    <p class="card__titulo">{{info.nome}}</p>
+    <div class="card__texto">
+      <p class="card__descricao">{{info.legenda}}</p>
+      <span>
+        <img
+          src="{% static '/assets/ícones/1x/favorite_outline.png' %}"
+          alt="ícone de coração"
+        />
+      </span>
+    </div>
+  </div>
+</li>
+{% endfor %}
+```
+
+## Banco de dados
+
+Pode criar models dentro do arquivo models.py, com uma classe e valores dados pela orm do django, além de uma função que retorne o valor, molezinha.
+
+```python
+class Fotografia(models.Model):
+    nome = models.CharField(max_length=100, null=False, blank=False)
+    legenda = models.CharField(max_length=150, null=False, blank=False)
+    descrição = models.TextField(null=False, blank=False)
+    foto = models.CharField(max_length=200, null=False, blank=False)
+
+    def __str__(self):
+       return f'Fotografia nome=[{self.nome}]'
+```
+
+Ao fim de cada criação, deve-se rodar o comando de migração "traduzir para o projeto que o model é um banco de dados, onde o projeto fara a sua inserção":
+
+```bash
+ python manage.py makemigrations
+```
+
+Esse comando cria um documento dentro da pasta migrate, onde especifica as alterações, em seguida, se estiver tudo ok, faça o seguinte comando:
+
+```bash
+ python manage.py migrate
+```
+
+**Inserindo dados via shell**
+
+```bash
+python manage.py shell
+from galeria.models import Fotografia
+foto = Fotografia(nome="Nebulosa de Carina", legenda="webbtelescope.org / NASA / James Webb", foto="carina-nebula.png")
+foto.save()
+Fotografia.objects.all()
 ```
