@@ -462,4 +462,25 @@ Para entrar no Django Admin, você precisa criar um superusuário com credenciai
 Após criar o superusuário, acesse o Django Admin através da URL: **http://127.0.0.1:8000/admin**
 
 Utilize o nome de usuário e a senha que você definiu durante a criação do superusuário para fazer login.
-Documentação do [Django Admin](https://docs.djangoproject.com/en/4.1/) .
+Documentação do [Django Admin](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/) .
+
+## Manipulando admin
+
+Posso manipular a busca, como será mostrado a tabela, quais são linkaveis:
+
+```python
+from django.contrib import admin
+from galeria.models import Fotografia
+
+class ListandoFotografias(admin.ModelAdmin):
+  list_display = ("id", "nome", "legenda")
+  list_display_links = ("id", "nome")
+  search_fields = ("nome",)
+
+# Register your models here.
+admin.site.register(Fotografia, ListandoFotografias)
+```
+
+## Alterando o banco de dados e novos campos
+
+Para adicionar novos campos é só fazer as novas datas e em seguida fazer migrate
