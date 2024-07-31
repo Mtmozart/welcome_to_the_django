@@ -376,3 +376,90 @@ def index(request):
   {% endfor %} {% else %} {% endif %}
 </ul>
 ```
+
+## Passando referência
+
+Deve-se passar como referência:
+
+```html
+<a href="{% url 'imagem' fotografia.id %}"></a>
+```
+
+Agora na rota:
+
+```python
+ path('imagem/<int:foto_id>', imagem, name='imagem'),
+```
+
+Passa-se o parâmetro na view.js
+
+```python
+from django.shortcuts import render, get_object_or_404
+///código
+def imagem(request, foto_id):
+        fotografia = get_object_or_404(Fotografia, pk=foto_id)
+        return render(request, 'galeria/imagem.html', {"fotografia": fotografia})
+```
+
+parâmetro referência
+
+```html
+<a href="{% url 'imagem' fotografia.id %}">></a>
+
+Em seguida passo na rota:
+
+<ul class="cards__lista">
+  {% if cards %}
+  <!-- Key e value-->
+  {% for fotografia in cards %}
+  <li class="card">
+    <a href="{% url 'imagem' fotografia.id %}">
+      <img
+        class="card__imagem"
+        src="{% static '/assets/imagens/galeria/'%}{{fotografia.foto}}"
+        alt="foto"
+      />
+    </a>
+    <span class="card__tag">Estrelas</span>
+    <div class="card__info">
+      <p class="card__titulo">{{fotografia.nome}}</p>
+      <div class="card__texto">
+        <p class="card__descricao">{{fotografia.legenda}}</p>
+        <span>
+          <img
+            src="{% static '/assets/ícones/1x/favorite_outline.png' %}"
+            alt="ícone de coração"
+          />
+        </span>
+      </div>
+    </div>
+  </li>
+  {% endfor %} {% else %} {% endif %}
+</ul>
+```
+
+## Django Admin
+
+Acessando o Django Admin
+
+O Django Admin já está ativo por padrão. Para acessálo, basta inserir /admin no final da URL do seu projeto e pressionar "Enter".
+bash: **127.0.0.1:8000/admin**
+
+Criando um Superusuário
+
+Para entrar no Django Admin, você precisa criar um superusuário com credenciais de administrador.
+
+```bash
+    python manage.py createsuperuser
+
+    O comando irá te guiar pelas etapas de criação, solicitando:
+        Nome de usuário: Digite o nome de usuário desejado.
+        Email: Digite o email desejado.
+        Senha: Digite a senha desejada.
+        Confirmação da senha: Digite a senha novamente para confirmar.
+```
+
+Após criar o superusuário, acesse o Django Admin através da URL: **http://127.0.0.1:8000/admin**
+
+Utilize o nome de usuário e a senha que você definiu durante a criação do superusuário para fazer login.
+Documentação do [Django Admin](https://docs.djangoproject.com/en/4.1/) .
