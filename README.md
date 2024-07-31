@@ -473,10 +473,12 @@ from django.contrib import admin
 from galeria.models import Fotografia
 
 class ListandoFotografias(admin.ModelAdmin):
+  class ListandoFotografias(admin.ModelAdmin):
   list_display = ("id", "nome", "legenda")
   list_display_links = ("id", "nome")
   search_fields = ("nome",)
-
+  list_filter = ("categoria",)
+  list_per_page = 10
 # Register your models here.
 admin.site.register(Fotografia, ListandoFotografias)
 ```
@@ -484,3 +486,9 @@ admin.site.register(Fotografia, ListandoFotografias)
 ## Alterando o banco de dados e novos campos
 
 Para adicionar novos campos é só fazer as novas datas e em seguida fazer migrate
+
+#### É importante entender os filtros do object, como no exemplo:
+
+```python
+ fotografias = Fotografia.objects.filter(publicada=True)
+```
