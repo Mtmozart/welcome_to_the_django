@@ -526,3 +526,7 @@ Para a chamar:
 ```html
 src="{{ fotografia.foto.url }}"
 ```
+
+## Autenticação e autorização
+
+- Posso manipular os usuários pelo django admin
