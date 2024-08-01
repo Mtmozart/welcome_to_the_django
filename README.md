@@ -492,3 +492,37 @@ Para adicionar novos campos é só fazer as novas datas e em seguida fazer migra
 ```python
  fotografias = Fotografia.objects.filter(publicada=True)
 ```
+
+## Manipulando local onde por mídia e outras configurações
+
+Primeiro defini-se o local e, settings da configuração:
+
+```python
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIA_URL = "/media/"
+```
+
+Em seguida, vai no url do setup:
+
+```python
+from django.conf.urls.static import static
+from django.conf import settings
+urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('galeria.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+```
+
+**Se quiser alterar um campo para receber imagem ou documento, tem que ser no molde.**
+
+```python
+foto = models.ImageField(upload_to="fotos/%Y/%m/%d/", blank=True)
+```
+
+Para a chamar:
+
+```html
+src="{{ fotografia.foto.url }}"
+```
